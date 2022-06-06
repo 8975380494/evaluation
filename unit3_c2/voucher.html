@@ -1,0 +1,180 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    Wallet balence id:- "wallet_balance" (only number).
+    <!-- - The voucher card will have class :- "voucher".
+  - All the vouchers will be appended inside div with id "voucher_list".
+  - Buy button will have class:- "buy_voucher"
+  - All the purchased voucher will be stored with key :- "purchase". -->
+
+  <!-- </body>
+</html> --> -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>voucher</title>
+
+    <style>
+      
+      #navbar{
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #search_bar>#search{
+        margin-bottom: 20px;
+      }
+
+      #voucher{
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 15px;
+      }
+
+      #voucher>div{
+        border: 1px solid red;
+        height: 450px;
+      }
+
+      #voucher>div>img{
+        width: 100%;
+        height: 70%;
+      }
+
+      #voucher>div>h1{
+        margin: 0;
+      }
+
+      #voucher>div>.book_now{
+        color: white;
+        background-color: blue;
+        margin-top: 7px;
+      }
+      #voucher>div>.book_now:hover{
+        cursor: pointer;
+        color: blue;
+        background: white;
+        border: blue 1px solid;
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div id="navbar">
+      <h1>voucher List</h1>
+      
+      <h1 id="wallet"></h1>
+    </div>
+
+    <div id="search_bar">
+      <input oninput="debounce(main,1500)" type="text" id="search" autofocus>
+    </div>
+
+    <div id="Voucher"></div>
+  </body>
+</html>
+
+<script>
+   
+  //  card()
+  //  function dispaly(data){
+  //    data.forEach(element,i=>{
+  //      console.log(element.name)
+  //      let div= document.createElement("div")
+  //      div.class="voucher"
+  //      let img= document.createElement("img")
+  //      img.src= element.image
+  //      let h3= Document.createElement("h3")
+  //      h3.innerText= element.image
+  //      let price= Document.createElement("p") 
+  //      price.innerText= element.price
+  //      let btn= Document.createElement("button")
+  //      btn.innerText= "buy";
+  //      btn.class= "buy_voucher"
+  //      button.addEventListener("click",function(){
+  //        check(element)
+  //      })
+  //      div.append(img,h3,price,btn)
+  //      document.querySelector("#voucher_list").append(div)
+  //    })
+
+  //    function check(element){
+  //      let store= JSON.parse(localStorage.getItem("purchase"))
+  //    }
+  //  }
+
+  let data11=JSON.parse(localStorage.getItem("user"))
+sum= data11.wallet
+console.log(sum)
+let x=document.querySelector("#wallet_balance")
+x.innerText=sum
+async function card(){
+let url="https://masai-vouchers-api.herokuapp.com/api/vouchers"
+
+let res=await fetch(url)
+let data= await res.json()
+
+
+//console.log(data)
+data.forEach(element => {
+    display(element.vouchers)
+});
+}
+card()
+
+function display(data){
+ 
+//console.log(data)
+    data.forEach(element => {
+      // console.log(element.name)
+        let div=document.createElement("div")
+        div.class="voucher"
+        let img=document.createElement("img")
+img.src=element.image;
+
+let h3=document.createElement("h3")
+h3.innerText=element.name;
+let price=document.createElement("p")
+price.innerText=element.price;
+let btn=document.createElement("button")
+btn.innerText="buy"
+btn.class="buy_voucher"
+btn.addEventListener("click",function(){
+    check1(element,element.price)
+})
+div.append(img,h3,price,btn)
+document.querySelector("#voucher_list").append(div)
+
+    });
+}
+function check1(elemen,price){
+    //console.log(elemen)
+    if(sum>=price){
+sum=sum-price
+    alert("Hurray! purchase successful")
+    let store=JSON.parse(localStorage.getItem("purchase"))||[]
+
+    store.push(elemen)
+    localStorage.setItem("purchase",JSON.stringify(store))
+    }
+    else{
+        alert("Sorry! insufficient balance")
+    }
+    data11.wallet=sum
+    localStorage.setItem("user",JSON.stringify(data11))
+    let x=document.querySelector("#wallet_balance")
+    x.innerText=sum
+}
+
+</script>

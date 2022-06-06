@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    <div id="navbar">
+      <h3>Sign Up</h3>
+      <a href="voucher.html">Purchase Voucher</a>
+    </div>
+<form id="form">
+  <h1>Sign up</h1>
+    
+    <p> Name </p>  <input type="name" id="name"      placeholder="enter your full name">
+    <p> Email </p> <input type="email" id="email"   placeholder="enter your email" >
+    <p> Amount </p>  <input type="number" id="amount" placeholder="enter amount" >
+    <p> Address </p><input type="address" id="amount" placeholder="enter your full address" >
+     <button id="submit">Submit</button>
+</form>
+     <!-- <a href="movies.html"><button id="book_movies">Book Movies</button></a> -->
+
+    
+    <!-- - name input box :- "name"
+  - email input box :- "email"
+  - Address input box :- "address"
+  - Amount input box :- "amount" 
+  - Submit button :- "submit"
+  - The user will be stored with key:- "user"
+  - The input fields should become empty after submitting -->
+  </body>
+</html>
+<script>
+  document.querySelector("#form").addEventListener("submit",myurl)
+
+  var arr= []
+  function myurl(){
+    event.preventDefault()
+    var data= {
+      Name:form.name.value,
+      Email:form.email.value,
+      Amount:form.amount.value,
+      Address:form.address.value
+    };
+
+    arr.push(data);
+    localStorage.setItem("user",JSON.stringify(arr))
+    console.log(arr)
+  }
+  
+  
+</script>
+
